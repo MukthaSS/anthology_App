@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:anthology_app/controller/Auth_services.dart';
 import 'package:anthology_app/controller/news_controller.dart';
 import '../model/news_model.dart';
+import 'AuthScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context); // No listen: false, as we want to rebuild on changes
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -55,9 +57,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
+          if (authService.isLoggedIn) // <--- Check if logged in
+            IconButton(
+              icon: const Icon(Icons.person_rounded),
+              onPressed: () {}
+            )
+        else// Profile icon
           TextButton(
             child: const Text('Sign in'),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AuthScreen()),
+              );
+            },
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -70,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               child: const Text('Subscribe'),
-              onPressed: () {},
+              onPressed: () {
+
+              },
             ),
           ),
         ],

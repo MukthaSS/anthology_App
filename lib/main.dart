@@ -1,4 +1,5 @@
 import 'package:anthology_app/controller/news_controller.dart';
+import 'package:anthology_app/controller/Auth_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => NewsController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => NewsController()),
+        ChangeNotifierProvider(create: (context) => AuthService()),
+      ],
       child: MaterialApp(
         title: 'News Dispatch',
         debugShowCheckedModeBanner: false,
